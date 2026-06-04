@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tauasa.org</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --accent: #0066ff;
+      --border: #e5e5e5;
+      --card-bg: #f9f9f9;
+      --nav-h: 64px;
+      --max-w: 720px;
+      --serif: 'Georgia', serif;
+      --sans: system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--fg);
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--fg); }
+
+    /* ── Sections ── */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
+    }
+
+    .inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── Home ── */
+    #home {
+      min-height: 100vh;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      background: var(--fg);
+      color: var(--bg);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.8; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--border);
+      margin-left: 0.75rem;
+    }
+
+    .btn-ghost:hover { background: var(--card-bg); opacity: 1; }
+
+    /* ── Section headers ── */
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 440px;
+    }
+
+    /* ── Projects ── */
+    .project-grid {
+      display: grid;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .project-card {
+      background: var(--bg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .project-card:last-child { border-bottom: none; }
+    .project-card:hover { background: var(--card-bg); }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .project-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .project-link {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .project-link:hover { text-decoration: underline; }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 600px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .about-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .about-body p + p { margin-top: 1rem; }
+
+    .skill-group { margin-bottom: 1.25rem; }
+
+    .skill-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: calc(var(--max-w) + 4rem);
+      margin: 0 auto;
+      width: 100%;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--fg); }
+
+    /* ── Divider ── */
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--border);
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a class="logo" href="#home">
+      <!-- Logo mark: clean "T" monogram -->
+      <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36" height="36" rx="8" fill="#111111"/>
+        <path d="M10 11H26V14H20V25H16V14H10V11Z" fill="white"/>
+      </svg>
+      <span class="logo-text">tauasa.org</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HOME ── -->
+  <section id="home">
+    <div class="inner">
+      <p class="eyebrow">Software Engineer</p>
+      <h1>Hi, I'm Tauasa.</h1>
+      <p class="hero-sub">
+        <!-- EDIT: your one-liner value prop -->
+        I design and build software. This is where I share my open source projects and ideas (all hosted on <a href="https://github.com/tauasa">GitHub</a>).
+      </p>
+      <div>
+        <a class="btn" href="#projects">View projects</a>
+        <a class="btn btn-ghost" href="#about">About me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="inner">
+      <div class="eyebrow">Work</div>
+      <h2>Projects</h2>
+      <p class="section-desc">Here are a few of the open source repos I've worked on recently. You can <a href="https://github.com/tauasa?tab=repositories">view more of them</a> on GitHub</p>
+      <div class="divider"></div>
+
+      <div class="project-grid">
+
+        <!-- PROJECT 1 — duplicate this block to add more -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">RTLSDR-Spring</span>
+            <a class="project-link" href="https://github.com/tauasa/jdbs">View →</a>
+          </div>
+          <p class="project-desc">Java implementation of the rtl_tcp protocol. Controls one or more RTL-SDR dongles over a REST API, WebSocket IQ stream, and the original rtl_tcp wire protocol, all from a single JVM process</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">Web Sockets</span>
+          </div>
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">Morse-Java</span>
+            <a class="project-link" href="https://github.com/tauasa/morse">View →</a>
+          </div>
+          <p class="project-desc">Java application that converts text ↔ Morse code with optional audio playback. 
+          It can be executed as a CLI or a GUI that uses JavaFX.</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">JavaFX</span>
+            <span class="tag">CSS</span>
+          </div>
+        </div>
+
+        <!-- PROJECT 3 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">Java Debug Bridge Server</span>
+            <a class="project-link" href="https://github.com/tauasa/jdbs">View →</a>
+          </div>
+          <p class="project-desc">A lightweight TCP debug-logging server for Java applications. Clients connect over a plain TCP socket and stream structured JSON log events — including optional PNG/JPG image attachments — to the server in real time.</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">CSS</span>
+            <span class="tag">Bash</span>
+            <span class="tag">SLF4J</span>
+            <span class="tag">logback</span>
+            <span class="tag">log4j</span>
+          </div>
+        </div>
+
+        <!-- PROJECT 4 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">tui-java</span>
+            <a class="project-link" href="https://github.com/tauasa/tui-java">View →</a>
+          </div>
+          <p class="project-desc">A simple Java API for performing common, mundane tasks like String manipulation, Date/time operations, servlet development, and more</p>
+          <div class="tags">
+            <span class="tag">Java</span>
+          </div>
+        </div>
+
+        <!-- PROJECT 5 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">Morse-RS</span>
+            <a class="project-link" href="https://github.com/tauasa/morse-rs">View →</a>
+          </div>
+          <p class="project-desc">Rust application that converts text ↔ Morse code with optional audio playback.</p>
+          <div class="tags">
+            <span class="tag">Rust</span>
+          </div>
+        </div>
+
+        <!-- PROJECT 6 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">Morse-PWA</span>
+            <a class="project-link" href="https://github.com/tauasa/morse-pwa">View →</a>
+          </div>
+          <p class="project-desc">Progressive Web Application that converts text ↔ Morse code with optional audio playback.</p>
+          <div class="tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML5</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="inner">
+      <div class="eyebrow">Background</div>
+      <h2>About</h2>
+      <div class="divider"></div>
+
+      <div class="about-grid">
+        <div class="about-body">
+          <p>
+            <!-- EDIT: 2–3 paragraphs about yourself. Who are you, what do you work on, what are you interested in? -->
+            I'm a native to Northern California living in Sacramento County that enjoys building well-crafted systems with code that's readable and maintainable.
+          </p>
+          <p>
+            <!-- Add more context — your background, education, current role, etc. -->
+          </p>
+          <p>
+            Outside work, I train/teach judo and dabble in amateur radio. My GMRS callsign is <i>WSKZ939</i>.
+          </p>
+          <br/>
+          <a class="btn" href="mailto:tauasa@gmail.com">Get in touch</a>
+        </div>
+
+        <div>
+          <div class="skill-group">
+            <p class="skill-label">Languages</p>
+            <div class="skill-list tags">
+              <span class="tag">Java</span>
+              <span class="tag">Scala</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Kotlin</span>
+              <span class="tag">Python</span>
+              <span class="tag">Perl</span>
+              <span class="tag">Bash</span>
+              <span class="tag">Lua</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-label">Frameworks & tools</p>
+            <div class="skill-list tags">
+              <span class="tag">Spring Boot</span>
+              <span class="tag">JavaFX</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Oracle</span>
+              <span class="tag">SDR++</span>
+              <span class="tag">rtl_tcp</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-label">Currently exploring</p>
+            <div class="skill-list tags">
+              <span class="tag">Claude</span>
+              <span class="tag">SDR</span>
+              <span class="tag">Raspberry Pi</span>
+              <span class="tag">Rust</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>© 2026 Tauasa Timoteo</span>
+    <div class="footer-links">
+      <a href="https://github.com/tauasa" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/tauasa/" target="_blank">LinkedIn</a>
+      <a href="https://www.instagram.com/tauasa/" target="_blank">Instagram</a>
+    </div>
+  </footer>
+
+</body>
+</html>
